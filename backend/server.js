@@ -4,20 +4,25 @@ import cors from "cors";
 import { connectDB } from "./config/db.js";
 import productRoutes from "./routes/product.route.js";
 
-dotenv.config();
-
 const app = express();
 const PORT = process.env.PORT || 5000;
 
 app.use(express.json());
 
-app.use(
-	cors({
-		origin: ["http://localhost:5173", process.env.CLIENT_URL],
-		methods: ["GET", "POST", "PUT", "DELETE"],
-		credentials: true,
-	})
-);
+if (process.env.NODE_ENV !== "production") {
+	dotenv.config({
+		path: "./config/.env",
+	});
+};
+
+const corsConfig = {
+	origin: process.env.Client_URL,
+	credentials: true,
+	method: ["GET", "POST", "PUT", "DELETE"],
+};
+
+app.options("", cors(corsConfig));
+app.use(cors(corsConfig));
 
 app.get("/", (req, res) => {
 	res.send("Hello World");
