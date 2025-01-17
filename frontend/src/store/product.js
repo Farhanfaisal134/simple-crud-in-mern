@@ -1,6 +1,6 @@
 import { create } from "zustand";
 
-const BASE_URL = "http://localhost:5000/api";
+const BASE_URL = "https://simple-crud-in-mern.vercel.app/api";
 
 export const useProductStore = create((set) => ({
 	products: [],
